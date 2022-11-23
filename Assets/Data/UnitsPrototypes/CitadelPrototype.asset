@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f430d0315d511a04bb9e032dfd144b6c, type: 3}
+  m_Name: CitadelPrototype
+  m_EditorClassIdentifier: 
+  Description: 
+  Icon: {fileID: 0}
+  ProduseTimeSec: 10
+  ProduseCost:
+    Resources: 000000000000000000000000000000000000000000000000
+  AttackType: 0
+  DefenceType: 3
+  Health: 500
+  CurrentHealth: 1
+  Attack: 10
+  AttackChance: 0.5
+  Defence: 5
+  Initiative: 1
+  prefab: {fileID: 3236878775616496981, guid: 17649eb5684b2e2469dd9cff315fff21, type: 3}

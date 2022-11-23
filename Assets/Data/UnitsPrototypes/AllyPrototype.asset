@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f430d0315d511a04bb9e032dfd144b6c, type: 3}
+  m_Name: AllyPrototype
+  m_EditorClassIdentifier: 
+  Description: 
+  Icon: {fileID: 0}
+  ProduseTimeSec: 10
+  ProduseCost:
+    Resources: 000000000000000000000000000000000000000000000000
+  AttackType: 1
+  DefenceType: 0
+  Health: 100
+  CurrentHealth: 1
+  Attack: 10
+  AttackChance: 0.5
+  Defence: 1
+  Initiative: 1
+  prefab: {fileID: 4741580329937741610, guid: 6d57f00aa4a83074eb0e85321ac6a0e9, type: 3}

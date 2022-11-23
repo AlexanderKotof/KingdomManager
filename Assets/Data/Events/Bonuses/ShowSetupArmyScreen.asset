@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 515bcb6a51d8a644aa5f50467dac42da, type: 3}
+  m_Name: ShowSetupArmyScreen
+  m_EditorClassIdentifier: 
+  ScreenObjectPrefab: {fileID: 1747318684882689780, guid: 7f438f16bf9546946957d3d3762efbab,
+    type: 3}
+  order: 0
+  carousel: 0

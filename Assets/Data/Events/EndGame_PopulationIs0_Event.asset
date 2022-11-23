@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a11c7cc181a28ed41b82828b4bb73c58, type: 3}
+  m_Name: EndGame_PopulationIs0_Event
+  m_EditorClassIdentifier: 
+  requiredConditions:
+  - {fileID: 11400000, guid: c376de4b6bc6e8c4fa31f32c99256841, type: 2}
+  message: All your peoples are died!

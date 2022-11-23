@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c0d2fc251c7d8045bf8c3bd0670bf0e, type: 3}
+  m_Name: Has5Swordsmans_Condition
+  m_EditorClassIdentifier: 
+  NeededUnits:
+    general: {fileID: 0}
+    units:
+    - prototype: {fileID: 11400000, guid: b9e7f52dc0b164242b4e15041176dc3a, type: 2}
+      positions: []
+      count: 5

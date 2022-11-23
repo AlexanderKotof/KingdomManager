@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ecb70da1e6fa041b035fcab95f398c, type: 3}
+  m_Name: Wood Walls
+  m_EditorClassIdentifier: 
+  Description: Guard the sity
+  Icon: {fileID: 21300000, guid: b22f2f95f925c1c4999df923cd139a1f, type: 3}
+  ProduseTimeSec: 300
+  ProduseCost:
+    resources: 000000000000000000000000000000000000000000000000
+  buildingUpgrade: {fileID: 0}
+  ProvideBonuses: []
+--- !u!114 &6955288553642536718
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f57f33d620208324684a252adae0689b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bonuses: []
