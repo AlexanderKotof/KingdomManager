@@ -1,5 +1,5 @@
 ﻿using KM.Features.Population;
-using KM.Startup;
+using KM.Systems;
 using UnityEngine;
 
 namespace KM.Features.GameEventsFeature.Events.Bonuses
@@ -12,12 +12,12 @@ namespace KM.Features.GameEventsFeature.Events.Bonuses
 
         public override void Activate()
         {
-            AppStartup.Instance.GetSystem<PopulationSystem>().GetPopulation(type).maxCount += maxValueChange;
+            GameSystems.GetSystem<PopulationSystem>().GetPopulation(type).maxCount += maxValueChange;
         }
 
         public override void Deactivate()
         {
-            AppStartup.Instance.GetSystem<PopulationSystem>().GetPopulation(type).maxCount -= maxValueChange;
+            GameSystems.GetSystem<PopulationSystem>().GetPopulation(type).maxCount -= maxValueChange;
         }
 
         public override string GetDescription()

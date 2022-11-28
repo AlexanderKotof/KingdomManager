@@ -1,7 +1,7 @@
 ﻿using KM.Features.DayChange;
 using KM.Features.Population;
 using KM.Features.Resources;
-using KM.Startup;
+using KM.Systems;
 using KM.UI.CarouselScreen.Components;
 using UnityEngine.UI;
 
@@ -22,9 +22,9 @@ namespace KM.UI.CarouselScreens
 
         protected void Start()
         {
-            _populationManager = AppStartup.Instance.GetSystem<PopulationSystem>();
-            _dayChangeSystem = AppStartup.Instance.GetSystem<DayChangeSystem>();
-            _resourcesSystem = AppStartup.Instance.GetSystem<ResourcesDayChangeSystem>();
+            _populationManager = GameSystems.GetSystem<PopulationSystem>();
+            _dayChangeSystem = GameSystems.GetSystem<DayChangeSystem>();
+            _resourcesSystem = GameSystems.GetSystem<ResourcesDayChangeSystem>();
 
             CurrentDay.text = "0";
             PeoplesCount.text = _populationManager.Peoples.ToString();

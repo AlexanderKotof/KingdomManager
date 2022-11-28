@@ -1,5 +1,5 @@
 using KM.Features.CameraFeature;
-using KM.Startup;
+using KM.Systems;
 using ScreenSystem.Components;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -15,8 +15,8 @@ namespace KM.UI.ArmySetupScreen
 
         protected override void OnShow()
         {
-            _raycasterSystem = AppStartup.Instance.GetSystem<RaycasterSystem>();
-            _cameraSystem = AppStartup.Instance.GetSystem<CameraSystem>();
+            _raycasterSystem = GameSystems.GetSystem<RaycasterSystem>();
+            _cameraSystem = GameSystems.GetSystem<CameraSystem>();
         }
 
         public void OnBeginDrag(PointerEventData eventData)

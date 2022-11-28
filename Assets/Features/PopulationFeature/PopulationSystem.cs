@@ -1,6 +1,6 @@
 ﻿using KM.Features.DayChange;
 using KM.Features.Resources;
-using KM.Startup;
+using KM.Systems;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -67,8 +67,8 @@ namespace KM.Features.Population
         }
         public void Initialize()
         {
-            _dayChangeSystem = AppStartup.Instance.GetSystem<DayChangeSystem>();
-            _resourceSystem = AppStartup.Instance.GetSystem<ResourcesSystem>();
+            _dayChangeSystem = GameSystems.GetSystem<DayChangeSystem>();
+            _resourceSystem = GameSystems.GetSystem<ResourcesSystem>();
 
             _dayChangeSystem.NewDayCome += OnNewDayCome;
         }

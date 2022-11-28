@@ -3,7 +3,7 @@ using KM.Features.ArmyFeature;
 using KM.Features.DayChange;
 using KM.Features.GameEventsFeature.Events.Bonuses;
 using KM.Features.Population;
-using KM.Startup;
+using KM.Systems;
 using KM.UI.Components;
 using ScreenSystem;
 using ScreenSystem.Components;
@@ -34,9 +34,9 @@ namespace KM.UI.CarouselScreens
 
         protected void Start()
         {
-            _armyManager = AppStartup.Instance.GetSystem<ArmySystem>();
-            _populationSystem = AppStartup.Instance.GetSystem<PopulationSystem>();
-            _dayChangeSystem = AppStartup.Instance.GetSystem<DayChangeSystem>();
+            _armyManager = GameSystems.GetSystem<ArmySystem>();
+            _populationSystem = GameSystems.GetSystem<PopulationSystem>();
+            _dayChangeSystem = GameSystems.GetSystem<DayChangeSystem>();
 
             recruitUnitsList.SetItems<EntityButton>(_armyManager.ReadyToRecruit.Count, (item, par) =>
             {

@@ -1,4 +1,4 @@
-﻿using KM.Startup;
+﻿using KM.Systems;
 using UnityEngine;
 
 namespace KM.Features.BattleFeature
@@ -10,8 +10,8 @@ namespace KM.Features.BattleFeature
 
         public override void Initialize()
         {
-            AppStartup.Instance.RegisterSystem(new BattleSystem3d.BattleSystem());
-            AppStartup.Instance.RegisterSystem(new CitadelSystem(this));
+            GameSystems.RegisterSystem(new BattleSystem3d.BattleSystem());
+            GameSystems.RegisterSystem(new CitadelSystem(this));
         }
     }
 }

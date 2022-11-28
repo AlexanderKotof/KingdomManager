@@ -1,4 +1,4 @@
-﻿using KM.Startup;
+﻿using KM.Systems;
 
 namespace KM.Features.Resources
 {
@@ -13,8 +13,8 @@ namespace KM.Features.Resources
 
         public override void Initialize()
         {
-            AppStartup.Instance.RegisterSystem(new ResourcesSystem(this));
-            AppStartup.Instance.RegisterSystem(new ResourcesDayChangeSystem(this));
+            GameSystems.RegisterSystem(new ResourcesSystem(this));
+            GameSystems.RegisterSystem(new ResourcesDayChangeSystem(this));
         }
     }
 }

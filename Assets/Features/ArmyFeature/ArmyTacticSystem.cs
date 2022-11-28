@@ -1,10 +1,10 @@
 ﻿using KM.Features.BattleFeature.BattleSystem3d;
 using KM.Features.Raycasterfeature.Raycaster;
 using KM.Features.CameraFeature;
-using KM.Startup;
 using UnityEngine;
 using static KM.Features.BattleFeature.BattleSystem3d.Unit;
 using System.Collections.Generic;
+using KM.Systems;
 
 namespace KM.Features.ArmyFeature
 {
@@ -19,8 +19,8 @@ namespace KM.Features.ArmyFeature
 
         public void Initialize()
         {
-            _armySystem = AppStartup.Instance.GetSystem<ArmySystem>();
-            _raycaster = AppStartup.Instance.GetSystem<RaycasterSystem>();
+            _armySystem = GameSystems.GetSystem<ArmySystem>();
+            _raycaster = GameSystems.GetSystem<RaycasterSystem>();
 
             GuardUnits = new List<Unit>();
             _raycaster.OnClick += OnRaycast;

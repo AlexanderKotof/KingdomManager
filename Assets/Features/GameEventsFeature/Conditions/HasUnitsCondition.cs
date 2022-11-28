@@ -1,5 +1,5 @@
 ﻿using KM.Features.ArmyFeature;
-using KM.Startup;
+using KM.Systems;
 using UnityEngine;
 
 namespace KM.Features.GameEventsFeature.Events.Conditions
@@ -21,7 +21,7 @@ namespace KM.Features.GameEventsFeature.Events.Conditions
 
         public override void Initialize()
         {
-            _armySystem = AppStartup.Instance.GetSystem<ArmySystem>();
+            _armySystem = GameSystems.GetSystem<ArmySystem>();
             _armySystem.ArmyUpdated += OnArmiesUpdated;
         }
 

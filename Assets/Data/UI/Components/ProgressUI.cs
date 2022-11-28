@@ -1,5 +1,5 @@
 ﻿using KM.Features.Population;
-using KM.Startup;
+using KM.Systems;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,7 +31,7 @@ public class ProgressUI : MonoBehaviour
         openedHeight = thisTransform.rect.height;
         closedHeight = openedHeight * 0.6f;
 
-        _populationSystem = AppStartup.Instance.GetSystem<PopulationSystem>();
+        _populationSystem = GameSystems.GetSystem<PopulationSystem>();
     }
 
     

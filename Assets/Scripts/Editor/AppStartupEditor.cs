@@ -1,4 +1,5 @@
 using KM.Startup;
+using KM.Systems;
 using UnityEditor;
 using UnityEngine;
 
@@ -29,7 +30,7 @@ namespace KM.Editors
             EditorGUILayout.LabelField("Systems:", EditorStyles.boldLabel);
 
 
-            foreach (var system in _target.Systems.Values)
+            foreach (var system in GameSystems.Systems.Values)
             {
                 if (GUILayout.Button($"    - {system.GetType().Name}", GUILayout.MinHeight(_pixOnLine)))
                 {
@@ -43,7 +44,7 @@ namespace KM.Editors
 
             var systemsList = "\n";
             int height = 0;
-            foreach (var system in _target.Systems.Values)
+            foreach (var system in GameSystems.Systems.Values)
             {
                 if (system is ISystemUpdate)
                 {

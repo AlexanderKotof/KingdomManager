@@ -1,6 +1,6 @@
-﻿using ScreenSystem.Components;
+﻿using KM.Startup;
+using ScreenSystem.Components;
 using ScreenSystem.Screens;
-using static KM.Startup.AppStartup;
 
 namespace KM.UI.EndGameScreen
 {
@@ -17,7 +17,7 @@ namespace KM.UI.EndGameScreen
 
         private void RestartGame()
         {
-            App.RestartGame();
+            AppStartupUtils.RestartGame();
             Hide();
         }
 

@@ -1,5 +1,5 @@
 using KM.Features.Population;
-using KM.Startup;
+using KM.Systems;
 using UnityEngine;
 
 namespace KM.Features.GameEventsFeature.Events.Conditions
@@ -19,7 +19,7 @@ namespace KM.Features.GameEventsFeature.Events.Conditions
 
         public override void Initialize()
         {
-            _populationSystem = AppStartup.Instance.GetSystem<PopulationSystem>();
+            _populationSystem = GameSystems.GetSystem<PopulationSystem>();
             _populationSystem.PopulationChanged += PopulationCondition_PopulationChanged;
         }
 

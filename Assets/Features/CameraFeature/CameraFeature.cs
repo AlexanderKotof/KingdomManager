@@ -1,4 +1,4 @@
-using KM.Startup;
+using KM.Systems;
 using UnityEngine;
 
 namespace KM.Features.CameraFeature
@@ -11,8 +11,8 @@ namespace KM.Features.CameraFeature
 
         public override void Initialize()
         {
-            AppStartup.Instance.RegisterSystem(new CameraSystem(cameraPrefab, cameraMoveSpeed));
-            AppStartup.Instance.RegisterSystem(new RaycasterSystem(raycastLayerMask));
+            GameSystems.RegisterSystem(new CameraSystem(cameraPrefab, cameraMoveSpeed));
+            GameSystems.RegisterSystem(new RaycasterSystem(raycastLayerMask));
         }
 
 

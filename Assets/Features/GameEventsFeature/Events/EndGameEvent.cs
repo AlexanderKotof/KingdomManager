@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using static KM.Startup.AppStartup;
+﻿using KM.Startup;
+using UnityEngine;
 
 namespace KM.Features.GameEventsFeature.Events
 {
@@ -11,7 +11,7 @@ namespace KM.Features.GameEventsFeature.Events
         public override void Activate()
         {
             Debug.LogWarning("Game End Event: " + message);
-            App.EndGame(message);
+            AppStartupUtils.EndGame(message);
         }
     }
 }

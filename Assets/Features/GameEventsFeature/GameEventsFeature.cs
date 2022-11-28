@@ -1,5 +1,5 @@
 using KM.Features.GameEventsFeature.Events;
-using KM.Startup;
+using KM.Systems;
 using System.Collections.Generic;
 
 namespace KM.Features.GameEventsFeature
@@ -10,7 +10,7 @@ namespace KM.Features.GameEventsFeature
 
         public override void Initialize()
         {
-            AppStartup.Instance.RegisterSystem(new GameEventsSystem(this));
+            GameSystems.RegisterSystem(new GameEventsSystem(this));
         }
     }
 }

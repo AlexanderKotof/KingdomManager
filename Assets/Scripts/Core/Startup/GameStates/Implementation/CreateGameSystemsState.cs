@@ -1,4 +1,5 @@
 ﻿using KM.Features;
+using KM.Systems;
 using System.Threading.Tasks;
 
 namespace KM.Startup
@@ -26,7 +27,7 @@ namespace KM.Startup
 
         private void InitializeSystems()
         {
-            foreach (var system in AppStartup.Instance.Systems.Values)
+            foreach (var system in GameSystems.Systems.Values)
             {
                 system.Initialize();
             }

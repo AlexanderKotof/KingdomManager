@@ -12,7 +12,7 @@ namespace KM.Features.GameEventsFeature.Events.Conditions
 
         public override void Initialize()
         {
-            //AppStartup.Instance.GetSystem<ArmySystem>().BattleReady += BattleManager_onBattleReady;
+            //GameSystems.GetSystem<ArmySystem>().BattleReady += BattleManager_onBattleReady;
         }
 
         private void BattleManager_onBattleReady()

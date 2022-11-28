@@ -1,6 +1,8 @@
-﻿using KM.Features.Population;
+﻿using KM.Core;
+using KM.Features.Population;
 using KM.Features.Resources;
 using KM.Startup;
+using KM.Systems;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,8 +34,8 @@ public class BuildingSystem : ISystem
 
     public void Initialize()
     {
-        _populationSystem = AppStartup.Instance.GetSystem<PopulationSystem>();
-        _resourcesSystem = AppStartup.Instance.GetSystem<ResourcesSystem>();
+        _populationSystem = GameSystems.GetSystem<PopulationSystem>();
+        _resourcesSystem = GameSystems.GetSystem<ResourcesSystem>();
 
         _buildersPopulation = _populationSystem.GetPopulation(PopulationType.Builders);
     }
@@ -75,7 +77,7 @@ public class BuildingSystem : ISystem
             return;
         }
 
-        AppStartup.Instance.StartCoroutine(BuildingProgress());
+        Coroutines.Run(BuildingProgress());
     }
 
     public void SpeedUp()
@@ -94,7 +96,7 @@ public class BuildingSystem : ISystem
     {
         _resourcesSystem.ChangeResources(NowBuilds.ProduseCost);
 
-        AppStartup.Instance.StopCoroutine(BuildingProgress());
+        Coroutines.Stop(BuildingProgress());
 
         onBuilded?.Invoke(null);
 

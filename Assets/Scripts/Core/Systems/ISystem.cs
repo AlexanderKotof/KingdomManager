@@ -1,4 +1,4 @@
-﻿namespace KM.Startup
+﻿namespace KM.Systems
 {
     public interface ISystem
     {

@@ -1,4 +1,4 @@
-﻿using KM.Startup;
+﻿using KM.Systems;
 
 namespace KM.Features.DayChange
 {
@@ -8,7 +8,7 @@ namespace KM.Features.DayChange
 
         public override void Initialize()
         {
-            AppStartup.Instance.RegisterSystem(new DayChangeSystem(secondsInDay, 0));
+            GameSystems.RegisterSystem(new DayChangeSystem(secondsInDay, 0));
         }
     }
 }

@@ -1,4 +1,4 @@
-using KM.Startup;
+using KM.Systems;
 using UnityEngine;
 
 namespace KM.Features.ArmyFeature
@@ -7,8 +7,8 @@ namespace KM.Features.ArmyFeature
     {
         public override void Initialize()
         {
-            AppStartup.Instance.RegisterSystem(new ArmySystem());
-            AppStartup.Instance.RegisterSystem(new ArmyTacticSystem());
+            GameSystems.RegisterSystem(new ArmySystem());
+            GameSystems.RegisterSystem(new ArmyTacticSystem());
         }
     }
 }

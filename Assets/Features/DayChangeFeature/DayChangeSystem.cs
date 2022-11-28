@@ -1,4 +1,6 @@
-﻿using KM.Startup;
+﻿using KM.Core;
+using KM.Startup;
+using KM.Systems;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -21,17 +23,17 @@ namespace KM.Features.DayChange
 
         public void Initialize()
         {
-            AppStartup.Instance.StartCoroutine(DaysCounter());
+            Coroutines.Run(DaysCounter());
         }
 
         public void Destroy()
         {
-            AppStartup.Instance.StopCoroutine(DaysCounter());
+            Coroutines.Stop(DaysCounter());
         }
 
         IEnumerator DaysCounter()
         {
-            while (AppStartup.Instance.isActiveAndEnabled)
+            while (true)
             {
                 yield return _dayChangeTime;
 

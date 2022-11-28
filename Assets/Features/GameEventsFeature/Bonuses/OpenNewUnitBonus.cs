@@ -1,5 +1,5 @@
 ﻿using KM.Features.ArmyFeature;
-using KM.Startup;
+using KM.Systems;
 using System;
 using UnityEngine;
 
@@ -18,11 +18,11 @@ namespace KM.Features.GameEventsFeature.Events.Bonuses
         {
             Debug.Log("Activate " + name);
             // add unit to ready for recruit
-            AppStartup.Instance.GetSystem<ArmySystem>().ReadyToRecruit.Add(openUnit);
+            GameSystems.GetSystem<ArmySystem>().ReadyToRecruit.Add(openUnit);
 
             if (removesUnit != null)
             {
-                AppStartup.Instance.GetSystem<ArmySystem>().ReadyToRecruit.Remove(removesUnit);
+                GameSystems.GetSystem<ArmySystem>().ReadyToRecruit.Remove(removesUnit);
             }
 
             unitOpened?.Invoke(openUnit);
@@ -31,10 +31,10 @@ namespace KM.Features.GameEventsFeature.Events.Bonuses
 
         public override void Deactivate()
         {
-            AppStartup.Instance.GetSystem<ArmySystem>().ReadyToRecruit.Remove(openUnit);
+            GameSystems.GetSystem<ArmySystem>().ReadyToRecruit.Remove(openUnit);
             if (removesUnit != null)
             {
-                AppStartup.Instance.GetSystem<ArmySystem>().ReadyToRecruit.Add(removesUnit);
+                GameSystems.GetSystem<ArmySystem>().ReadyToRecruit.Add(removesUnit);
             }
             unitOpened?.Invoke(openUnit);
         }

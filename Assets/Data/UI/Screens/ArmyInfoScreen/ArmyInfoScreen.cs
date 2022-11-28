@@ -1,6 +1,6 @@
 ﻿using KM.BattleSystem;
 using KM.Features.ArmyFeature;
-using KM.Startup;
+using KM.Systems;
 using ScreenSystem.Components;
 using ScreenSystem.Screens;
 using TMPro;
@@ -23,7 +23,7 @@ namespace KM.UI.ArmyInfoScreen
 
         protected override void OnInit()
         {
-            playerArmy = AppStartup.Instance.GetSystem<ArmySystem>().freeArmy;
+            playerArmy = GameSystems.GetSystem<ArmySystem>().freeArmy;
         }
 
         protected override void OnShow()

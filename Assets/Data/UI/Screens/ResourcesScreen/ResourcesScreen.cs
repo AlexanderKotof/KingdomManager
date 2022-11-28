@@ -1,5 +1,5 @@
 ﻿using KM.Features.Resources;
-using KM.Startup;
+using KM.Systems;
 using KM.UI.Components;
 using ScreenSystem.Components;
 using ScreenSystem.Screens;
@@ -14,7 +14,7 @@ namespace KM.UI
 
         protected override void OnShow()
         {
-            _resourceSystem = AppStartup.Instance.GetSystem<ResourcesSystem>();
+            _resourceSystem = GameSystems.GetSystem<ResourcesSystem>();
 
             _resourceSystem.ResourcesUpdated += ResourcesChanged;
 

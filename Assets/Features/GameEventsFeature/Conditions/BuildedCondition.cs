@@ -1,4 +1,4 @@
-﻿using KM.Startup;
+﻿using KM.Systems;
 using UnityEngine;
 
 namespace KM.Features.GameEventsFeature.Events.Conditions
@@ -12,7 +12,7 @@ namespace KM.Features.GameEventsFeature.Events.Conditions
 
         public override void Initialize()
         {
-            _buildSystem = AppStartup.Instance.GetSystem<BuildingSystem>();
+            _buildSystem = GameSystems.GetSystem<BuildingSystem>();
             _buildSystem.onBuilded += BuildManager_onBuilded;
         }
 

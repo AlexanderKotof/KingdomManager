@@ -1,5 +1,5 @@
 ﻿using KM.Features.ArmyFeature;
-using KM.Startup;
+using KM.Systems;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -49,7 +49,7 @@ public class GeneralUI : MonoBehaviour
         AddAllToArmyButton.onClick.AddListener(() =>
         {
             //general.Army.AddUnits(MainGameManager.ArmyManager.army);
-            AppStartup.Instance.GetSystem<ArmySystem>().freeArmy = new Army();
+            GameSystems.GetSystem<ArmySystem>().freeArmy = new Army();
 
             for (var i = 0; i < recruitedUnitsParent.childCount; i++)
             {
@@ -68,7 +68,7 @@ public class GeneralUI : MonoBehaviour
     private void Init()
     {
 
-        var manager = AppStartup.Instance.GetSystem<ArmySystem>();
+        var manager = GameSystems.GetSystem<ArmySystem>();
 
         for (int i = 0; i < manager.freeArmy.UnitTypesCount; i++)
         {

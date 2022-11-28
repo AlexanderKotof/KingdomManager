@@ -1,4 +1,4 @@
-﻿using KM.Startup;
+﻿using KM.Systems;
 
 namespace KM.Features.Population
 {
@@ -11,7 +11,7 @@ namespace KM.Features.Population
 
         public override void Initialize()
         {
-            AppStartup.Instance.RegisterSystem(new PopulationSystem(this));
+            GameSystems.RegisterSystem(new PopulationSystem(this));
         }
     }
 }

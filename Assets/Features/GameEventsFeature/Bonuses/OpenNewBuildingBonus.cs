@@ -1,4 +1,4 @@
-﻿using KM.Startup;
+﻿using KM.Systems;
 using UnityEngine;
 
 namespace KM.Features.GameEventsFeature.Events.Bonuses
@@ -11,7 +11,7 @@ namespace KM.Features.GameEventsFeature.Events.Bonuses
         public override void Activate()
         {
             Debug.Log("Activate " + name);
-            AppStartup.Instance.GetSystem<BuildingSystem>().ReadyToBuild.Add(building);
+            GameSystems.GetSystem<BuildingSystem>().ReadyToBuild.Add(building);
         }
 
         public override void Deactivate()

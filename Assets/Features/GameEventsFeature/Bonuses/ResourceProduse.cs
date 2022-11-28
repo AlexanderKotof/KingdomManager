@@ -1,5 +1,5 @@
 ﻿using KM.Features.Resources;
-using KM.Startup;
+using KM.Systems;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,12 +15,12 @@ namespace KM.Features.GameEventsFeature.Events.Bonuses
         {
             Debug.Log("Activate " + name);
 
-            AppStartup.Instance.GetSystem<ResourcesDayChangeSystem>().ChangeBaseProduction(produseInADay);
+            GameSystems.GetSystem<ResourcesDayChangeSystem>().ChangeBaseProduction(produseInADay);
         }
 
         public override void Deactivate()
         {
-            AppStartup.Instance.GetSystem<ResourcesDayChangeSystem>().ChangeBaseProduction(produseInADay.Invert());
+            GameSystems.GetSystem<ResourcesDayChangeSystem>().ChangeBaseProduction(produseInADay.Invert());
         }
 
         public override string GetDescription()

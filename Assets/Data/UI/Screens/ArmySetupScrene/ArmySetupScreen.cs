@@ -1,5 +1,5 @@
 using KM.Features.ArmyFeature;
-using KM.Startup;
+using KM.Systems;
 using ScreenSystem;
 using ScreenSystem.Components;
 using ScreenSystem.Screens;
@@ -23,8 +23,8 @@ namespace KM.UI.ArmySetupScreen
         {
             switchStateButton.SetCallback(SwitchState);
 
-            _armySystem = AppStartup.Instance.GetSystem<ArmySystem>();
-            _armyTacticSystem = AppStartup.Instance.GetSystem<ArmyTacticSystem>();
+            _armySystem = GameSystems.GetSystem<ArmySystem>();
+            _armyTacticSystem = GameSystems.GetSystem<ArmyTacticSystem>();
 
             _armySystem.ArmyUpdated += UpdateList;
             UpdateList();

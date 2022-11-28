@@ -1,7 +1,7 @@
 ﻿using KM.Features.ArmyFeature;
 using KM.Features.DayChange;
 using KM.Features.Population;
-using KM.Startup;
+using KM.Systems;
 using UnityEngine;
 
 namespace KM.Features.Resources
@@ -30,10 +30,10 @@ namespace KM.Features.Resources
 
         public void Initialize()
         {
-            _resourceSystem = AppStartup.Instance.GetSystem<ResourcesSystem>();
-            _dayChangeSystem = AppStartup.Instance.GetSystem<DayChangeSystem>();
-            _populationSystem = AppStartup.Instance.GetSystem<PopulationSystem>();
-            _armySystem = AppStartup.Instance.GetSystem<ArmySystem>();
+            _resourceSystem = GameSystems.GetSystem<ResourcesSystem>();
+            _dayChangeSystem = GameSystems.GetSystem<DayChangeSystem>();
+            _populationSystem = GameSystems.GetSystem<PopulationSystem>();
+            _armySystem = GameSystems.GetSystem<ArmySystem>();
 
             UpdateDayChange();
 

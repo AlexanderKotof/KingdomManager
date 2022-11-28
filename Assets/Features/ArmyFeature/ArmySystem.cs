@@ -1,7 +1,9 @@
 ﻿using KM.BattleSystem;
+using KM.Core;
 using KM.Features.Population;
 using KM.Features.Resources;
 using KM.Startup;
+using KM.Systems;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -50,8 +52,8 @@ namespace KM.Features.ArmyFeature
 
         public void Initialize()
         {
-            _populationSystem = AppStartup.Instance.GetSystem<PopulationSystem>();
-            _resourcesSystem = AppStartup.Instance.GetSystem<ResourcesSystem>();
+            _populationSystem = GameSystems.GetSystem<PopulationSystem>();
+            _resourcesSystem = GameSystems.GetSystem<ResourcesSystem>();
         }
 
         public void Destroy()
@@ -88,7 +90,7 @@ namespace KM.Features.ArmyFeature
             QueueUpdated?.Invoke();
 
             if (!isRecruiting)
-                AppStartup.Instance.StartCoroutine(Recruit());
+                Coroutines.Run(Recruit());
         }
 
         public void MoveToDefence(BattleUnitEntity selectedUnit, Vector3 position)

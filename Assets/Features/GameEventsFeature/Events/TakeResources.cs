@@ -1,6 +1,6 @@
 ﻿using KM.Features.GameEventsFeature.Events;
 using KM.Features.Resources;
-using KM.Startup;
+using KM.Systems;
 using UnityEngine;
 namespace KM.Features.GameEventsFeature.Events
 {
@@ -11,7 +11,7 @@ namespace KM.Features.GameEventsFeature.Events
 
         public override void Activate()
         {
-            AppStartup.Instance.GetSystem<ResourcesSystem>().ChangeResources(resources);
+            GameSystems.GetSystem<ResourcesSystem>().ChangeResources(resources);
 
             Debug.Log("TakeResources activated");
         }

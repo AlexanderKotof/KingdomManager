@@ -1,6 +1,6 @@
 ﻿using KM.Features.BattleFeature.BattleSystem3d;
 using KM.Features.Raycasterfeature.Raycaster;
-using KM.Startup;
+using KM.Systems;
 using System;
 using UnityEngine;
 
@@ -26,7 +26,7 @@ namespace KM.Features.CameraFeature
 
         public void Initialize()
         {
-            raycastCamera = AppStartup.Instance.GetSystem<CameraSystem>().MainCamera;
+            raycastCamera = GameSystems.GetSystem<CameraSystem>().MainCamera;
         }
 
         public void Raycast(Vector3 pointerPosition)

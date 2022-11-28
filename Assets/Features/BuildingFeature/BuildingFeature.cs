@@ -1,4 +1,4 @@
-﻿using KM.Startup;
+﻿using KM.Systems;
 using System.Collections.Generic;
 
 namespace KM.Features.BuildingFeature
@@ -9,7 +9,7 @@ namespace KM.Features.BuildingFeature
 
         public override void Initialize()
         {
-            AppStartup.Instance.RegisterSystem(new BuildingSystem(ReadyToBuild));
+            GameSystems.RegisterSystem(new BuildingSystem(ReadyToBuild));
         }
     }
 }

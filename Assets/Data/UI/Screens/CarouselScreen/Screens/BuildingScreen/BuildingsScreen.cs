@@ -1,6 +1,6 @@
 ﻿using KM.Features.DayChange;
 using KM.Features.Population;
-using KM.Startup;
+using KM.Systems;
 using KM.UI.CarouselScreen.Components;
 using KM.UI.Components;
 using ScreenSystem;
@@ -28,9 +28,9 @@ namespace KM.UI.CarouselScreens
 
         protected void Start()
         {
-            _buildingSystem = AppStartup.Instance.GetSystem<BuildingSystem>();
-            _populationSystem = AppStartup.Instance.GetSystem<PopulationSystem>();
-            _dayChangeSystem = AppStartup.Instance.GetSystem<DayChangeSystem>();
+            _buildingSystem = GameSystems.GetSystem<BuildingSystem>();
+            _populationSystem = GameSystems.GetSystem<PopulationSystem>();
+            _dayChangeSystem = GameSystems.GetSystem<DayChangeSystem>();
 
             CreateBuildingsButtons();
 

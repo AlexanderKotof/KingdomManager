@@ -1,4 +1,6 @@
+using KM.Core;
 using KM.Startup;
+using KM.Systems;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -43,7 +45,7 @@ namespace KM.Features.BattleFeature.BattleSystem3d
         public void Destroy()
         {
             if (battleState == BattleState.InBattle)
-                AppStartup.Instance.StopCoroutine(BattleProcess());
+                Coroutines.Stop(BattleProcess());
         }
 
         public void BeginBattle(BattleInfo battleInfo)
@@ -53,10 +55,10 @@ namespace KM.Features.BattleFeature.BattleSystem3d
 
             _battleInfo = battleInfo;
 
-            allies = AppStartup.Instance.GetSystem<ArmyFeature.ArmyTacticSystem>().GuardUnits;
+            allies = GameSystems.GetSystem<ArmyFeature.ArmyTacticSystem>().GuardUnits;
             SpawnEnemies(battleInfo);
 
-            AppStartup.Instance.StartCoroutine(BattleProcess());
+            Coroutines.Run(BattleProcess());
 
             BattleStarted?.Invoke(battleInfo);
         }
@@ -93,6 +95,9 @@ namespace KM.Features.BattleFeature.BattleSystem3d
         {
             foreach(var unit in allies)
             {
+                if (enemies.Count == 0)
+                    break;
+
                 var target = enemies[UnityEngine.Random.Range(0, enemies.Count)];
 
                 var prototype = ((BattleUnitEntity)unit.prototype);
@@ -105,6 +110,9 @@ namespace KM.Features.BattleFeature.BattleSystem3d
             }
             foreach (var unit in enemies)
             {
+                if (allies.Count == 0)
+                    break;
+
                 var target = allies[UnityEngine.Random.Range(0, allies.Count)];
 
                 var prototype = ((BattleUnitEntity)unit.prototype);

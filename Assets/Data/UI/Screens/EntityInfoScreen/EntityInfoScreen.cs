@@ -1,5 +1,5 @@
 ﻿using KM.Features.ArmyFeature;
-using KM.Startup;
+using KM.Systems;
 using ScreenSystem.Screens;
 using UnityEngine.UI;
 
@@ -68,12 +68,12 @@ namespace KM.UI
 
             if (_showEntity is BuildingBase building)
             {
-                AppStartup.Instance.GetSystem<BuildingSystem>().Build(building);
+                GameSystems.GetSystem<BuildingSystem>().Build(building);
                 Hide();
             }
             else if (_showEntity is BattleUnitEntity unit)
             {
-                AppStartup.Instance.GetSystem<ArmySystem>().RecruitUnit(unit);
+                GameSystems.GetSystem<ArmySystem>().RecruitUnit(unit);
             }
         }
 
