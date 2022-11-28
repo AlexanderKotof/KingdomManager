@@ -25,8 +25,8 @@ namespace KM.Features.GameEventsFeature.Events.Conditions
 
         private void PopulationCondition_PopulationChanged()
         {
-            if(lessOrMore == LessMore.LessThan && _populationSystem.Peoples < PopulationRequired || 
-                lessOrMore == LessMore.MoreThan && _populationSystem.Peoples > PopulationRequired)
+            if(lessOrMore == LessMore.LessThan && _populationSystem.People < PopulationRequired || 
+                lessOrMore == LessMore.MoreThan && _populationSystem.People > PopulationRequired)
             {
                 _populationSystem.PopulationChanged -= PopulationCondition_PopulationChanged;
                 Satisfy();

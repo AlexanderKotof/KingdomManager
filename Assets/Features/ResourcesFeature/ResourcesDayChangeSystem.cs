@@ -79,7 +79,7 @@ namespace KM.Features.Resources
             var dayChange = new ResourceStorage();
 
             var armiesCount = _armySystem.GetAllUnitsCount();
-            var peoplesCount = _populationSystem.Peoples;
+            var peoplesCount = _populationSystem.People;
 
             dayChange.resources[(int)ResourceType.Food] -= Mathf.FloorToInt(peoplesCount + armiesCount);
             dayChange.resources[(int)ResourceType.Gold] -= Mathf.FloorToInt(armiesCount);

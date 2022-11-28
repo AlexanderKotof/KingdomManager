@@ -146,9 +146,5 @@ public class BuildingSystem : ISystem
         {
             return _buildersPopulation.Count;
         }
-        set
-        {
-            _buildersPopulation.Count = value;
-        }
     }
 }

@@ -27,7 +27,7 @@ namespace KM.UI.CarouselScreens
             _resourcesSystem = GameSystems.GetSystem<ResourcesDayChangeSystem>();
 
             CurrentDay.text = "0";
-            PeoplesCount.text = _populationManager.Peoples.ToString();
+            PeoplesCount.text = _populationManager.People.ToString();
 
             _dayChangeSystem.NewDayCome += NewDayComes;
 
@@ -43,7 +43,7 @@ namespace KM.UI.CarouselScreens
         private void NewDayComes(int obj)
         {
             CurrentDay.text = obj.ToString();
-            PeoplesCount.text = _populationManager.Peoples.ToString();
+            PeoplesCount.text = _populationManager.People.ToString();
         }
 
         public void Update()

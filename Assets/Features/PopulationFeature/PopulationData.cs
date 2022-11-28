@@ -9,7 +9,7 @@ namespace KM.Features.Population
         public PopulationType type;
 
         [SerializeField]
-        private int count;
+        private int _count;
         public int maxCount;
 
         public event Action<int> PopulationChanged;
@@ -18,23 +18,25 @@ namespace KM.Features.Population
         {
             get
             {
-                return count;
+                return _count;
             }
-            set
+
+        }
+
+        public void SetCount(int count)
+        {
+            var newCount = Mathf.Clamp(count, 0, maxCount);
+            if (newCount != _count)
             {
-                var newCount = Mathf.Clamp(value, 0, maxCount);
-                if (newCount != count)
-                {
-                    count = newCount;
-                    PopulationChanged?.Invoke(count);
-                }
+                _count = newCount;
+                PopulationChanged?.Invoke(_count);
             }
         }
 
         public PopulationData(PopulationData data)
         {
             this.type = data.type;
-            this.count = data.count;
+            this._count = data._count;
             this.maxCount = data.maxCount;
         }
     }

@@ -154,7 +154,7 @@ namespace KM.Features.ArmyFeature
 
                 Debug.Log("Recruiting " + queueItem.unit.name + "...");
 
-                _populationSystem.ChangePeoples(-1);
+                _populationSystem.ChangePeopleCount(-1);
 
                 StartTraining?.Invoke(queueItem.unit);
 

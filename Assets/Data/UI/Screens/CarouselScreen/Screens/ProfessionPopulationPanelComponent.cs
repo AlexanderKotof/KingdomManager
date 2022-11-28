@@ -1,4 +1,5 @@
 ﻿using KM.Features.Population;
+using KM.Systems;
 using ScreenSystem.Components;
 using System;
 using TMPro;
@@ -16,6 +17,14 @@ namespace KM.UI.CarouselScreen.Components
         public Button moreButton;
 
         private PopulationData _population;
+        private PopulationSystem _populationSystem;
+
+        protected override void OnShow()
+        {
+            base.OnShow();
+
+            _populationSystem = GameSystems.GetSystem<PopulationSystem>();
+        }
 
         public void SetInfo(PopulationData population)
         {
@@ -25,7 +34,7 @@ namespace KM.UI.CarouselScreen.Components
 
             _population.PopulationChanged += (count) => SetCount(count, _population.maxCount);
 
-            SetButtonsCallback(delta => _population.Count += delta);
+            SetButtonsCallback(delta => _populationSystem.ChangePopulation(_population.type, delta));
         }
 
         private void SetInfo(string professionName, int count, int maxCount)
@@ -47,8 +56,10 @@ namespace KM.UI.CarouselScreen.Components
             moreButton.onClick.AddListener(() => callback.Invoke(1));
         }
 
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
+            base.OnDestroy();
+
             if(_population != null)
                 _population.PopulationChanged -= (count) => SetCount(count, _population.maxCount);
         }

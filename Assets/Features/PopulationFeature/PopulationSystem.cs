@@ -16,7 +16,7 @@ namespace KM.Features.Population
 
     public class PopulationSystem : ISystem
     {
-        public int Peoples { get; private set; }
+        public int People { get; private set; }
         public int DayGrowth { get; private set; }
         public int FreePeoples
         {
@@ -28,7 +28,7 @@ namespace KM.Features.Population
                     populationsCount += population.Count;
                 }
 
-                return Peoples - populationsCount;
+                return People - populationsCount;
             }
         }
         public int BusyPeoples
@@ -56,7 +56,7 @@ namespace KM.Features.Population
 
         public PopulationSystem(PopulationFeature feature)
         {
-            Peoples = feature.PeoplesOnStart;
+            People = feature.PeoplesOnStart;
             DayGrowth = feature.BaseDayGrowth;
 
             _populationsByTypes = new Dictionary<PopulationType, PopulationData>();
@@ -78,12 +78,35 @@ namespace KM.Features.Population
             _dayChangeSystem.NewDayCome -= OnNewDayCome;
         }
 
-        public void ChangePeoples(int delta)
+        public void ChangePeopleCount(int delta)
         {
-            Peoples += delta;
-            Peoples = Mathf.Clamp(Peoples, 0, int.MaxValue);
+            People += delta;
+
+            People = Mathf.Clamp(People, 0, int.MaxValue);
+
+            if (FreePeoples < 0)
+            {
+                FindAndReduseBiggestPopulation(Mathf.Abs(FreePeoples));
+            }
 
             PopulationChanged?.Invoke();
+        }
+
+        private void FindAndReduseBiggestPopulation(int removeCount)
+        {
+            var maxPopulation = 0;
+            PopulationData p = null;
+            foreach (var population in _populationsByTypes.Values)
+            {
+                if (population.Count > maxPopulation)
+                {
+                    maxPopulation = population.Count;
+                    p = population;
+                }
+            }
+
+            if (p != null)
+                p.SetCount(maxPopulation - removeCount);
         }
 
         public void ChangePopulation(PopulationType type, int delta)
@@ -95,8 +118,8 @@ namespace KM.Features.Population
                 return;
             }
 
-            population.Count += delta;
-
+            var newCount = population.Count + delta;
+            population.SetCount(newCount);
             PopulationChanged?.Invoke();
         }
 
@@ -111,16 +134,16 @@ namespace KM.Features.Population
 
         private void OnNewDayCome(int day)
         {
-            var resources = new ResourceStorage(Peoples - (int)(FreePeoples * 0.5f));
+            var resources = new ResourceStorage(People - (int)(FreePeoples * 0.5f));
             if (_resourceSystem.Resources.HasResources(resources))
             {
                 var peoplesDelta = UnityEngine.Random.value < _bornChance ? DayGrowth : 0;
-                ChangePeoples(peoplesDelta);
+                ChangePeopleCount(peoplesDelta);
             }
             else
             {
                 var peoplesDelta = UnityEngine.Random.value < _dieChance ? -DayGrowth : 0;
-                ChangePeoples(peoplesDelta);
+                ChangePeopleCount(peoplesDelta);
             }
         }
     }
