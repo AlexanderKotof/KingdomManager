@@ -26,14 +26,15 @@ public class BattleUnitEntity : GameEntity, IUnitPrototype
 
     [Tooltip("How many attacks can takes")]
     public int Health = 1;
-    [HideInInspector]
-    public int CurrentHealth = 1;
+
     [Tooltip("Attack damage")]
-    public int Attack = 1;
+    public int AttackDamage = 1;
     [Tooltip("Good attack chance")]
     public float AttackChance = 0.5f;
     [Tooltip("Chance to reduce damage, if > 0")]
     public int Defence = 1;
+
+    public float AttackDistance = 1f;
 
     public int Initiative = 1;
 
@@ -44,7 +45,7 @@ public class BattleUnitEntity : GameEntity, IUnitPrototype
     {
         string description = Description;
 
-        description += "\n HP: " + Health + "  Damage: " + Attack;
+        description += "\n HP: " + Health + "  Damage: " + AttackDamage;
 
         if (Defence > 0)
             description += "  Defence: " + Defence;

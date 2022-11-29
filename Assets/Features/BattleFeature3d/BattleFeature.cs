@@ -13,6 +13,7 @@ namespace KM.Features.BattleFeature
         {
             GameSystems.RegisterSystem(new BattleSystem());
             GameSystems.RegisterSystem(new CitadelSystem(this));
+            GameSystems.RegisterSystem(new TargetSelectionSystem());
             GameSystems.RegisterSystem(new UnitsMovementSystem());
             GameSystems.RegisterSystem(new AttackSystem());
         }

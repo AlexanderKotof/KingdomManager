@@ -6,20 +6,24 @@ namespace KM.Features.BattleFeature.BattleSystem3d
 {
     public class Unit : MonoBehaviour
     {
-        public float health = 100;
-        public Fraction fraction;
+        public IUnitPrototype Prototype { get; private set; }
 
-        public IUnitPrototype prototype;
-
-        public float damage = 10;
-        public float attackDistance = 1;
+        public float Health { get; private set; }
+        public float Damage { get; private set; }
+        public float AttackDistance { get; private set; }
 
         public bool canMove = true;
         public bool canAttack = true;
 
+        public Fraction fraction;
+
         public List<Unit> enemies;
+        public Unit target;
 
         public Action<Unit> Destroyed;
+        public float lastAttackTime;
+
+        public bool IsDead => Health <= 0;
 
         public enum Fraction
         {
@@ -27,11 +31,23 @@ namespace KM.Features.BattleFeature.BattleSystem3d
             Fraction2,
         }
 
+        public void SetPrototype(IUnitPrototype prototype)
+        {
+            Prototype = prototype;
+
+            if (prototype is BattleUnitEntity entity)
+            {
+                Health = entity.Health;
+                Damage = entity.AttackDamage;
+                AttackDistance = entity.AttackDistance;
+            }
+        }
+
         public void TakeDamage(float damage)
         {
-            health -= damage;
+            Health -= damage;
 
-            if (health <= 0)
+            if (Health <= 0)
             {
                 Destroyed?.Invoke(this);
             }

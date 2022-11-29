@@ -24,7 +24,7 @@ namespace KM.Features.BattleFeature.BattleSystem3d
             if (!unit)
                 return -1;
 
-            var damage = Random.Range(unit.Attack, unit.Attack + (int)unit.AttackType + 1);
+            var damage = Random.Range(unit.AttackDamage, unit.AttackDamage + (int)unit.AttackType + 1);
 
             if (team.general != null)
                 return damage + team.general.Strenght;
@@ -53,7 +53,7 @@ namespace KM.Features.BattleFeature.BattleSystem3d
 
             if (attacks)
             {
-                int damage = Random.Range(from.Attack - (int)to.DefenceType, from.Attack + (int)from.AttackType + 1);
+                int damage = Random.Range(from.AttackDamage - (int)to.DefenceType, from.AttackDamage + (int)from.AttackType + 1);
                 damage -= to.Defence;
                 return Mathf.Clamp(damage, 1, 9999);
             }

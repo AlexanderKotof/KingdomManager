@@ -195,7 +195,7 @@ namespace KM.Features.ArmyFeature
             count = units[index].count;
             return units[index].prototype;
         }
-
+        /*
         /// <summary>
         /// Returns left units count
         /// </summary>
@@ -222,7 +222,7 @@ namespace KM.Features.ArmyFeature
 
             return units[unitIndex].count;
         }
-
+        */
         public int AllUnitsCount()
         {
             int count = 0;
@@ -234,7 +234,7 @@ namespace KM.Features.ArmyFeature
 
             return count;
         }
-
+        /*
         public void RemoveDead()
         {
             for (int i = 0; i < UnitTypesCount; i++)
@@ -252,6 +252,6 @@ namespace KM.Features.ArmyFeature
                     //units[1].AddUnits(unit, killedCount);
                 }
             }
-        }
+        }*/
     }
 }

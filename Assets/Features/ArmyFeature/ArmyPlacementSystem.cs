@@ -43,7 +43,7 @@ namespace KM.Features.ArmyFeature
 
             if (data.selectUnit != null)
             {
-                _armySystem.MoveToArmy((BattleUnitEntity)data.selectUnit.prototype, 1);
+                _armySystem.MoveToArmy((BattleUnitEntity)data.selectUnit.Prototype, 1);
                 GuardUnits.Remove(data.selectUnit);
                 GameObject.Destroy(data.selectUnit.gameObject);
             }

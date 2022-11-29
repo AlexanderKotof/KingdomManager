@@ -48,6 +48,13 @@ namespace KM.Features.BattleFeature.BattleSystem3d
                 Coroutines.Stop(BattleProcess());
         }
 
+        public List<Unit> GetAllUnitsInBattle()
+        {
+            var units = new List<Unit>(allies);
+            units.AddRange(enemies);
+            return units;
+        }
+
         public void BeginBattle(BattleInfo battleInfo)
         {
             if (battleState == BattleState.InBattle)
@@ -94,7 +101,7 @@ namespace KM.Features.BattleFeature.BattleSystem3d
 
             while (enemies.Count > 0)
             {
-                yield return new WaitForSeconds(0.5f);
+                yield return null;
             }
 
             // Battle Ends
@@ -102,18 +109,27 @@ namespace KM.Features.BattleFeature.BattleSystem3d
             EndBattle(winer);
         }
 
-        
-
         private void SpawnEnemies(BattleInfo battleInfo)
         {
             foreach (var enemiesToSpawn in battleInfo.enemies.units)
             {
                 for (int i = 0; i < enemiesToSpawn.count; i++)
                 {
-                    var unit = SpawnUnit(enemiesToSpawn.prototype, enemiesToSpawn.positions[i], Fraction.Fraction2);
+                    var unit = SpawnUnit(enemiesToSpawn.prototype, enemiesToSpawn.positions[i].ToVector3(), Fraction.Fraction2);
                     unit.enemies = allies;
+
+                    unit.Destroyed += OnUnitDestroyed;
                 }
             }
+        }
+
+        private void OnUnitDestroyed(Unit unit)
+        {
+            unit.Destroyed -= OnUnitDestroyed;
+
+            enemies.Remove(unit);
+
+            GameObject.Destroy(unit.gameObject);
         }
 
         private void EndBattle(Fraction fractionWin)
@@ -123,72 +139,5 @@ namespace KM.Features.BattleFeature.BattleSystem3d
 
             BattleEnded?.Invoke(_battleInfo);
         }
-    }
-
-    public class AttackSystem : ISystem
-    {
-        private BattleSystem _battleSystem;
-
-        private List<Unit> _unitsInBattle;
-
-        public void Destroy()
-        {
-            _battleSystem.BattleStarted -= _battleSystem_BattleStarted;
-        }
-
-        public void Initialize()
-        {
-            _unitsInBattle = new List<Unit>();
-            _battleSystem = GameSystems.GetSystem<BattleSystem>();
-            _battleSystem.BattleStarted += _battleSystem_BattleStarted;
-        }
-
-        private void _battleSystem_BattleStarted(BattleInfo obj)
-        {
-            _unitsInBattle.AddRange(_battleSystem.allies);
-            _unitsInBattle.AddRange(_battleSystem.enemies);
-
-            Coroutines.Run(AttackCoroutine());
-        }
-
-        private IEnumerator AttackCoroutine()
-        {
-            yield return null;
-        }
-/*
-        private void Attack()
-        {
-            foreach (var unit in _battleSystem.allies)
-            {
-                if (enemies.Count == 0)
-                    break;
-
-                var target = enemies[UnityEngine.Random.Range(0, enemies.Count)];
-
-                var prototype = ((BattleUnitEntity)unit.prototype);
-                var damage = UnityEngine.Random.value <= prototype.AttackChance ? prototype.Attack : 0;
-
-                target.TakeDamage(damage);
-
-                if (target.health <= 0)
-                    enemies.Remove(target);
-            }
-
-            foreach (var unit in enemies)
-            {
-                if (allies.Count == 0)
-                    break;
-
-                var target = allies[UnityEngine.Random.Range(0, allies.Count)];
-
-                var prototype = ((BattleUnitEntity)unit.prototype);
-                var damage = UnityEngine.Random.value <= prototype.AttackChance ? prototype.Attack : 0;
-
-                target.TakeDamage(damage);
-
-                if (target.health <= 0)
-                    enemies.Remove(target);
-            }
-        }*/
     }
 }

@@ -6,8 +6,8 @@ namespace KM.Features.BattleFeature.BattleSystem3d
     {
         public static Unit SpawnUnit(IUnitPrototype prototype, Vector3 position)
         {
-            var unitGo = Object.Instantiate(prototype.Prefab, position, Quaternion.identity);
-            unitGo.prototype = prototype;
+            var unitGo = Unit.Instantiate<Unit>(prototype.Prefab, position, Quaternion.identity);
+            unitGo.SetPrototype(prototype);
             return unitGo;
         }
     }
