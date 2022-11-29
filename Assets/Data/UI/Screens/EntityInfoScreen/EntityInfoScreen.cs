@@ -73,7 +73,7 @@ namespace KM.UI
             }
             else if (_showEntity is BattleUnitEntity unit)
             {
-                GameSystems.GetSystem<ArmySystem>().RecruitUnit(unit);
+                GameSystems.GetSystem<ArmyRecruitSystem>().RecruitUnit(unit);
             }
         }
 

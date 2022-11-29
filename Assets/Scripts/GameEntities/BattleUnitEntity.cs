@@ -40,23 +40,6 @@ public class BattleUnitEntity : GameEntity, IUnitPrototype
     public Unit Prefab { get => prefab; }
     public Unit prefab;
 
-    public static BattleUnitEntity CreateUnit(BattleUnitEntity unit)
-    {
-        var instance = GameObject.Instantiate(unit);
-        instance.name = unit.name;
-        instance.Hash = unit.Hash;
-        instance.CurrentHealth = instance.Health;
-
-        instance.hideFlags = HideFlags.HideAndDontSave;
-
-        return instance;
-    }
-
-    public void Heal(int value)
-    {
-        CurrentHealth = Mathf.Clamp(CurrentHealth + value, 1, Health);
-    }
-
     public override string GetDescription()
     {
         string description = Description;

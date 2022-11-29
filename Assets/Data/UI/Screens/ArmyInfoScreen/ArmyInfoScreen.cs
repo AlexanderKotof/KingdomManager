@@ -1,5 +1,4 @@
-﻿using KM.BattleSystem;
-using KM.Features.ArmyFeature;
+﻿using KM.Features.ArmyFeature;
 using KM.Systems;
 using ScreenSystem.Components;
 using ScreenSystem.Screens;

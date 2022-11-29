@@ -1,9 +1,4 @@
-﻿using KM.BattleSystem;
-using KM.Features.ArmyFeature;
-using KM.Startup;
-using UnityEngine;
-
-namespace KM.Features.GameEventsFeature.Events.Conditions
+﻿namespace KM.Features.GameEventsFeature.Events.Conditions
 {
     //[CreateAssetMenu(menuName = "Game Entities/Events/Conditions/Battle Over")]
     public class BattleOverCondition : Condition

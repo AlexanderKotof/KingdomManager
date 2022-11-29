@@ -1,15 +1,14 @@
-﻿using System;
-using static KM.Features.BattleFeature.BattleSystem3d.BattleSystem;
+﻿using KM.Features.BattleFeature.BattleSystem3d;
+using System;
 
 namespace KM.Startup
 {
 
     [Serializable]
-        public struct StateInfo
-        {
-            public GameState state;
-            public BattleInfo battleInfo;
-        }
-
+    public struct StateInfo
+    {
+        public GameState state;
+        public BattleInfo battleInfo;
+    }
 
 }

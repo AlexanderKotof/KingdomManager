@@ -1,5 +1,4 @@
 using KM.Systems;
-using UnityEngine;
 
 namespace KM.Features.ArmyFeature
 {
@@ -8,7 +7,8 @@ namespace KM.Features.ArmyFeature
         public override void Initialize()
         {
             GameSystems.RegisterSystem(new ArmySystem());
-            GameSystems.RegisterSystem(new ArmyTacticSystem());
+            GameSystems.RegisterSystem(new ArmyRecruitSystem());
+            GameSystems.RegisterSystem(new ArmyPlacementSystem());
         }
     }
 }

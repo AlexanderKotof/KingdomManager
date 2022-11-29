@@ -1,11 +1,5 @@
-﻿using KM.BattleSystem;
-using KM.Core;
-using KM.Features.Population;
-using KM.Features.Resources;
-using KM.Startup;
-using KM.Systems;
+﻿using KM.Systems;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,28 +13,10 @@ namespace KM.Features.ArmyFeature
 
         public List<General> availableGenerals;
 
-        public List<BattleUnitEntity> ReadyToRecruit = new List<BattleUnitEntity>();
-
-        public ProductionQueue trainingQueue;
-
-        float recruitTimeLeft = 0;
-        bool isRecruiting = false;
-
-        public event Action<BattleUnitEntity> StartTraining;
-        public event Action<float, float> TrainingProgress;
-        public event Action<BattleUnitEntity> UnitTrained;
-        public event Action QueueUpdated;
-
         public event Action ArmyUpdated;
-
-
-        private PopulationSystem _populationSystem;
-        private ResourcesSystem _resourcesSystem;
 
         public ArmySystem()
         {
-            trainingQueue = new ProductionQueue();
-
             freeArmy = new Army();
             guardArmy = new Army();
         }
@@ -52,8 +28,7 @@ namespace KM.Features.ArmyFeature
 
         public void Initialize()
         {
-            _populationSystem = GameSystems.GetSystem<PopulationSystem>();
-            _resourcesSystem = GameSystems.GetSystem<ResourcesSystem>();
+
         }
 
         public void Destroy()
@@ -61,36 +36,10 @@ namespace KM.Features.ArmyFeature
 
         }
 
-        public void RecruitUnit(BattleUnitEntity unit)
+        public void AddFreeUnits(BattleUnitEntity unit, int count)
         {
-            RecruitUnit(ReadyToRecruit.IndexOf(unit));
-        }
-        public void RecruitUnit(int index)
-        {
-            if (ReadyToRecruit.Count <= index || index < 0)
-            {
-                Debug.Log("Error " + ReadyToRecruit.Count + "<=" + index);
-                return;
-            }
-
-            var unit = ReadyToRecruit[index];
-
-            if (_resourcesSystem.Resources.HasResources(unit.ProduseCost))
-            {
-                _resourcesSystem.ChangeResources(unit.ProduseCost.Invert());
-            }
-            else
-            {
-                Debug.Log("Dont have resources!");
-                return;
-            }
-
-            trainingQueue.AddUnit(unit);
-
-            QueueUpdated?.Invoke();
-
-            if (!isRecruiting)
-                Coroutines.Run(Recruit());
+            freeArmy.AddUnits(unit, count);
+            ArmyUpdated?.Invoke();
         }
 
         public void MoveToDefence(BattleUnitEntity selectedUnit, Vector3 position)
@@ -117,73 +66,5 @@ namespace KM.Features.ArmyFeature
 
             return price;
         }
-
-        /*
-        public void CancelTraining()
-        {
-            MainGameManager.Instance.Resources.AddResources(RecruitQuerry[0].ProduseCost);
-            MainGameManager.Instance.Peoples++;
-
-            StopCoroutine(Recruit());
-
-            onUnitTrained?.Invoke(null);
-
-            RecruitQuerry.RemoveAt(0);
-
-            StartCoroutine(Recruit());
-        }*/
-
-        public void SpeedUp()
-        {
-            recruitTimeLeft = 0;
-        }
-
-        IEnumerator Recruit()
-        {
-            while (trainingQueue.QueueLenght > 0)
-            {
-                while (_populationSystem.FreePeoples <= 0)
-                {
-                    yield return null;
-                }
-
-                var queueItem = trainingQueue.GetFirst();
-
-                if (queueItem == null)
-                    break;
-
-                Debug.Log("Recruiting " + queueItem.unit.name + "...");
-
-                _populationSystem.ChangePeopleCount(-1);
-
-                StartTraining?.Invoke(queueItem.unit);
-
-                isRecruiting = true;
-
-                recruitTimeLeft = queueItem.unit.ProduseTimeSec;
-
-                while (recruitTimeLeft > 0)
-                {
-                    yield return new WaitForSeconds(1);
-
-                    recruitTimeLeft--;
-
-                    TrainingProgress?.Invoke(recruitTimeLeft, (queueItem.unit.ProduseTimeSec - recruitTimeLeft) / queueItem.unit.ProduseTimeSec);
-                }
-
-                freeArmy.AddUnits(queueItem.unit, 1);
-
-                trainingQueue.RemoveOneFromFirst();
-
-                QueueUpdated?.Invoke();
-
-                UnitTrained?.Invoke(queueItem.unit);
-
-                ArmyUpdated?.Invoke();
-            }
-
-            isRecruiting = false;
-        }
-
     }
 }

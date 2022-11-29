@@ -171,7 +171,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3033672566931962662}
-  - component: {fileID: 262458747144404336}
+  - component: {fileID: 5375403495270603211}
   - component: {fileID: 8619848427151495236}
   m_Layer: 7
   m_Name: Swordsman
@@ -197,7 +197,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &262458747144404336
+--- !u!114 &5375403495270603211
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -206,7 +206,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5015124754818592764}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e03807b9917b484a873ac91d3e2a9c5, type: 3}
+  m_Script: {fileID: 11500000, guid: d25c4daa21eee8f4fbccb6f569834cf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
@@ -215,6 +215,7 @@ MonoBehaviour:
   attackDistance: 1
   canMove: 1
   canAttack: 1
+  enemies: []
 --- !u!136 &8619848427151495236
 CapsuleCollider:
   m_ObjectHideFlags: 0

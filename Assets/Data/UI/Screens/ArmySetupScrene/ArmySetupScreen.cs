@@ -17,14 +17,14 @@ namespace KM.UI.ArmySetupScreen
         public ListComponent unitsListComponent;
 
         private ArmySystem _armySystem;
-        private ArmyTacticSystem _armyTacticSystem;
+        private ArmyPlacementSystem _armyTacticSystem;
 
         protected override void OnShow()
         {
             switchStateButton.SetCallback(SwitchState);
 
             _armySystem = GameSystems.GetSystem<ArmySystem>();
-            _armyTacticSystem = GameSystems.GetSystem<ArmyTacticSystem>();
+            _armyTacticSystem = GameSystems.GetSystem<ArmyPlacementSystem>();
 
             _armySystem.ArmyUpdated += UpdateList;
             UpdateList();

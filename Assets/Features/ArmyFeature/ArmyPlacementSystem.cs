@@ -8,7 +8,7 @@ using KM.Systems;
 
 namespace KM.Features.ArmyFeature
 {
-    public class ArmyTacticSystem : ISystem
+    public class ArmyPlacementSystem : ISystem
     {
         private ArmySystem _armySystem;
 

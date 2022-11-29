@@ -25,4 +25,4 @@ MonoBehaviour:
   AttackChance: 0.6
   Defence: 1
   Initiative: 1
-  prefab: {fileID: 4741580329937741610, guid: 51ae3c1b9194a0f428179810a9909461, type: 3}
+  prefab: {fileID: 7562581124833682827, guid: 51ae3c1b9194a0f428179810a9909461, type: 3}

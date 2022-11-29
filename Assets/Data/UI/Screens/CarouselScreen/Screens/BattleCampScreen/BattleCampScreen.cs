@@ -1,5 +1,4 @@
-﻿using KM.BattleSystem;
-using KM.Features.ArmyFeature;
+﻿using KM.Features.ArmyFeature;
 using KM.Features.DayChange;
 using KM.Features.GameEventsFeature.Events.Bonuses;
 using KM.Features.Population;
@@ -27,40 +26,42 @@ namespace KM.UI.CarouselScreens
         public Button StartBattleButton;
         public Button ArmyInfoButton;
 
-        ArmySystem _armyManager;
+        ArmySystem _armySystem;
+        ArmyRecruitSystem _armyRecruitSystem;
         PopulationSystem _populationSystem;
         DayChangeSystem _dayChangeSystem;
 
 
         protected void Start()
         {
-            _armyManager = GameSystems.GetSystem<ArmySystem>();
+            _armySystem = GameSystems.GetSystem<ArmySystem>();
             _populationSystem = GameSystems.GetSystem<PopulationSystem>();
             _dayChangeSystem = GameSystems.GetSystem<DayChangeSystem>();
+            _armyRecruitSystem = GameSystems.GetSystem<ArmyRecruitSystem>();
 
-            recruitUnitsList.SetItems<EntityButton>(_armyManager.ReadyToRecruit.Count, (item, par) =>
+            recruitUnitsList.SetItems<EntityButton>(_armyRecruitSystem.ReadyToRecruit.Count, (item, par) =>
             {
-                item.SetInfo(_armyManager.ReadyToRecruit[par.index], OnArmyClick);
+                item.SetInfo(_armyRecruitSystem.ReadyToRecruit[par.index], OnArmyClick);
             });
 
-            inArmyUnitsList.SetItems<EntityButton>(_armyManager.freeArmy.UnitTypesCount, (item, par) =>
+            inArmyUnitsList.SetItems<EntityButton>(_armySystem.freeArmy.UnitTypesCount, (item, par) =>
             {
-                var unit = _armyManager.freeArmy.units[par.index].prototype;
-                var count = _armyManager.freeArmy.units[par.index].count;
+                var unit = _armySystem.freeArmy.units[par.index].prototype;
+                var count = _armySystem.freeArmy.units[par.index].count;
 
                 item.SetInfo(unit, OnArmyClick, count);
             });
 
-            recruitProgressView.speedupButton.onClick.AddListener(_armyManager.SpeedUp);
+            recruitProgressView.speedupButton.onClick.AddListener(_armyRecruitSystem.SpeedUp);
             recruitProgressView.Hide();
 
             freePeoplesText.text = _populationSystem.FreePeoples.ToString();
 
-            _armyManager.StartTraining += OnTrainingStarts;
-            _armyManager.TrainingProgress += OnTrainingProgress;
-            _armyManager.UnitTrained += OnTrained;
+            _armyRecruitSystem.StartTraining += OnTrainingStarts;
+            _armyRecruitSystem.TrainingProgress += OnTrainingProgress;
+            _armyRecruitSystem.UnitTrained += OnTrained;
 
-            _armyManager.QueueUpdated += OnQueueUpdated;
+            _armyRecruitSystem.QueueUpdated += OnQueueUpdated;
 
 
             ArmyInfoButton.onClick.AddListener(() =>
@@ -78,18 +79,18 @@ namespace KM.UI.CarouselScreens
             OpenNewUnitBonus.unitOpened -= OpenNewUnitBonus_unitOpened;
             _dayChangeSystem.NewDayCome -= OnNewDayComes;
 
-            _armyManager.StartTraining -= OnTrainingStarts;
-            _armyManager.TrainingProgress -= OnTrainingProgress;
-            _armyManager.UnitTrained -= OnTrained;
+            _armyRecruitSystem.StartTraining -= OnTrainingStarts;
+            _armyRecruitSystem.TrainingProgress -= OnTrainingProgress;
+            _armyRecruitSystem.UnitTrained -= OnTrained;
 
-            _armyManager.QueueUpdated -= OnQueueUpdated;
+            _armyRecruitSystem.QueueUpdated -= OnQueueUpdated;
         }
 
         private void OnQueueUpdated()
         {
-            productionQueue.SetItems<EntityButton>(_armyManager.trainingQueue.QueueLenght, (item, param) =>
+            productionQueue.SetItems<EntityButton>(_armyRecruitSystem.trainingQueue.QueueLenght, (item, param) =>
             {
-                var queueItem = _armyManager.trainingQueue.queue[param.index];
+                var queueItem = _armyRecruitSystem.trainingQueue.queue[param.index];
                 item.SetInfo(queueItem.unit, (ent) => { }, queueItem.count);
             });
         }
@@ -110,10 +111,10 @@ namespace KM.UI.CarouselScreens
             recruitProgressView.UpdateProgress("", 1);
             recruitProgressView.Hide();
 
-            inArmyUnitsList.SetItems<EntityButton>(_armyManager.freeArmy.UnitTypesCount, (item, par) =>
+            inArmyUnitsList.SetItems<EntityButton>(_armySystem.freeArmy.UnitTypesCount, (item, par) =>
             {
-                var playerUnit = _armyManager.freeArmy.units[par.index].prototype;
-                var count = _armyManager.freeArmy.units[par.index].count;
+                var playerUnit = _armySystem.freeArmy.units[par.index].prototype;
+                var count = _armySystem.freeArmy.units[par.index].count;
 
                 item.SetInfo(playerUnit, OnArmyClick, count);
             });
@@ -130,8 +131,8 @@ namespace KM.UI.CarouselScreens
         public void OnArmyClick(GameEntity unit)
         {
             ScreensManager.ShowScreen<EntityInfoScreen>().ShowUnitUI((BattleUnitEntity)unit,
-                _armyManager.ReadyToRecruit.Contains((BattleUnitEntity)unit),
-                _armyManager.freeArmy.GetUnitCount((BattleUnitEntity)unit));
+                _armyRecruitSystem.ReadyToRecruit.Contains((BattleUnitEntity)unit),
+                _armySystem.freeArmy.GetUnitCount((BattleUnitEntity)unit));
         }
 
         private void OnNewDayComes(int obj)

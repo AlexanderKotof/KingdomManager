@@ -9,6 +9,8 @@ namespace KM.Features.BattleFeature
     {
         private BattleFeature _feature;
 
+        public Citadel Citadel => _citadel;
+
         private Citadel _citadel;
 
         public event Action CitadelDestroyed;

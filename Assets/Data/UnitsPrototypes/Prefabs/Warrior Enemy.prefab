@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7525743432091099516}
-  - component: {fileID: 4741580329937741610}
+  - component: {fileID: 7562581124833682827}
   - component: {fileID: 507141621582502644}
   m_Layer: 7
   m_Name: Warrior Enemy
@@ -33,7 +33,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4741580329937741610
+--- !u!114 &7562581124833682827
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,15 +42,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 572035782981563814}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e03807b9917b484a873ac91d3e2a9c5, type: 3}
+  m_Script: {fileID: 11500000, guid: d25c4daa21eee8f4fbccb6f569834cf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  fraction: 1
+  fraction: 0
   damage: 10
   attackDistance: 1
   canMove: 1
   canAttack: 1
+  enemies: []
 --- !u!136 &507141621582502644
 CapsuleCollider:
   m_ObjectHideFlags: 0

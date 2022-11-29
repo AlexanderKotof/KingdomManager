@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace KM.BattleSystem
+namespace KM.Features.BattleFeature.BattleSystem3d
 {
     public static class BattleUtils
     {
@@ -24,7 +24,7 @@ namespace KM.BattleSystem
             if (!unit)
                 return -1;
 
-            var damage = Random.Range(unit.Attack, unit.Attack + (int)unit.AttackType + 1 );
+            var damage = Random.Range(unit.Attack, unit.Attack + (int)unit.AttackType + 1);
 
             if (team.general != null)
                 return damage + team.general.Strenght;
@@ -61,7 +61,7 @@ namespace KM.BattleSystem
                 return 0;
         }
 
-       
+
 
         /// <summary>
         /// Sort all units indexes by initiative 
