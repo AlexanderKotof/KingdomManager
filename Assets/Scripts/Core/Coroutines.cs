@@ -15,17 +15,17 @@ namespace KM.Core
 
         public static Coroutine Run(IEnumerator coroutine)
         {
-            return _instance.StartCoroutine(coroutine);
+            return _instance?.StartCoroutine(coroutine);
         }
 
         public static void Stop(IEnumerator coroutine)
         {
-            _instance.StopCoroutine(coroutine);
+            _instance?.StopCoroutine(coroutine);
         }
 
         public static void StopAll()
         {
-            _instance.StopAllCoroutines();
+            _instance?.StopAllCoroutines();
         }
     }
 }
