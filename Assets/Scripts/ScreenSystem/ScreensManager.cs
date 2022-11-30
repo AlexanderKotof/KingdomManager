@@ -41,7 +41,7 @@ namespace ScreenSystem
                 if (!screen.isActiveAndEnabled)
                     screen.Show();
 
-                screen.transform.SetSiblingIndex(Instance.transform.childCount);
+                //screen.transform.SetSiblingIndex(Instance.transform.childCount);
                 return screen;
             }
 
@@ -58,7 +58,7 @@ namespace ScreenSystem
                 if (!screen.isActiveAndEnabled)
                     screen.Show();
 
-                screen.transform.SetSiblingIndex(Instance.transform.childCount);
+                //screen.transform.SetSiblingIndex(Instance.transform.childCount);
                 return (T)screen;
             }
 

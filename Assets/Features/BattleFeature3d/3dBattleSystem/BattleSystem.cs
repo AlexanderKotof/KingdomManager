@@ -1,5 +1,7 @@
 using KM.Core;
 using KM.Systems;
+using KM.UI.BattleBeginsScreen;
+using KM.UI.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +24,7 @@ namespace KM.Features.BattleFeature.BattleSystem3d
         public List<Unit> allies;
         public List<Unit> enemies;
 
+        public event Action<BattleInfo, Action> BattlePrepare;
         public event Action<BattleInfo> BattleStarted;
         public event Action<BattleInfo> BattleEnded;
 
@@ -57,16 +60,19 @@ namespace KM.Features.BattleFeature.BattleSystem3d
 
         public void BeginBattle(BattleInfo battleInfo)
         {
-            if (battleState == BattleState.InBattle)
-                return;
-
             _battleInfo = battleInfo;
+            ScreenSystem.ScreensManager.ShowScreen<BattleBeginsScreen>().SetBattleInfo(battleInfo, BattleStart);
+        }
 
-            SetupUnits(battleInfo);
+        private void BattleStart()
+        {
+            UIUtils.HideScreensOnBattleStarts();
+
+            SetupUnits(_battleInfo);
 
             Coroutines.Run(BattleProcess());
 
-            BattleStarted?.Invoke(battleInfo);
+            BattleStarted?.Invoke(_battleInfo);
         }
 
         private void SetupUnits(BattleInfo battleInfo)
@@ -134,6 +140,8 @@ namespace KM.Features.BattleFeature.BattleSystem3d
 
         private void EndBattle(Fraction fractionWin)
         {
+            UIUtils.ShowScreensOnBattleEnds();
+
             Debug.Log("Battle ends, winner - " + fractionWin);
             battleState = BattleState.Home;
 

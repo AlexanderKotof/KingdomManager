@@ -127,6 +127,7 @@ MonoBehaviour:
   - {fileID: 1747318684882689780, guid: 7f438f16bf9546946957d3d3762efbab, type: 3}
   - {fileID: -5196856853089603455, guid: 5864972eb1e6b854692be3bfae02a418, type: 3}
   - {fileID: 2900532613290814630, guid: 027333ae62f49b046b7969b26f01ab03, type: 3}
+  - {fileID: 896943825538071442, guid: ca989b8d95a134f44a894a409b364f5d, type: 3}
 --- !u!223 &6470354426819093181
 Canvas:
   m_ObjectHideFlags: 0

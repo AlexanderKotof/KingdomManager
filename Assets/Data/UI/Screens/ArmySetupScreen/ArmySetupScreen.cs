@@ -8,8 +8,6 @@ namespace KM.UI.ArmySetupScreen
 {
     public class ArmySetupScreen : BaseScreen
     {
-        private bool _isSetuping;
-
         public CheckboxButtonComponent switchStateButton;
 
         public WindowComponent setupStateView;
@@ -21,6 +19,7 @@ namespace KM.UI.ArmySetupScreen
 
         protected override void OnShow()
         {
+            switchStateButton.SetCheckedState(false, true);
             switchStateButton.SetCallback(SwitchState);
 
             _armySystem = GameSystems.GetSystem<ArmySystem>();
@@ -47,8 +46,6 @@ namespace KM.UI.ArmySetupScreen
 
         private void SwitchState(bool setuping)
         {
-            _isSetuping = setuping;
-
             _armyTacticSystem.SelectUnit(null);
 
             if (setuping)
