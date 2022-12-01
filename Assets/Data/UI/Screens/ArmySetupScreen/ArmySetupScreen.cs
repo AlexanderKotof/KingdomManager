@@ -1,8 +1,11 @@
 using KM.Features.ArmyFeature;
+using KM.Features.CameraFeature;
 using KM.Systems;
 using ScreenSystem;
 using ScreenSystem.Components;
 using ScreenSystem.Screens;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace KM.UI.ArmySetupScreen
 {
@@ -16,6 +19,36 @@ namespace KM.UI.ArmySetupScreen
 
         private ArmySystem _armySystem;
         private ArmyPlacementSystem _armyTacticSystem;
+        private RaycasterSystem _raycasterSystem;
+        private CameraSystem _cameraSystem;
+
+        protected override void OnInit()
+        {
+            base.OnInit();
+
+            dragZone.OnClick += OnClick;
+            dragZone.OnDragging += OnDragging;
+
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            dragZone.OnClick -= OnClick;
+            dragZone.OnDragging -= OnDragging;
+        }
+
+        private void OnDragging(PointerEventData eventData)
+        {
+            var delta = new Vector3(-eventData.delta.x, 0, -eventData.delta.y);
+            _cameraSystem.MoveCamera(delta);
+        }
+
+        private void OnClick(PointerEventData eventData)
+        {
+            _raycasterSystem.Raycast(eventData.position);
+        }
 
         protected override void OnShow()
         {
@@ -24,6 +57,8 @@ namespace KM.UI.ArmySetupScreen
 
             _armySystem = GameSystems.GetSystem<ArmySystem>();
             _armyTacticSystem = GameSystems.GetSystem<ArmyPlacementSystem>();
+            _raycasterSystem = GameSystems.GetSystem<RaycasterSystem>();
+            _cameraSystem = GameSystems.GetSystem<CameraSystem>();
 
             _armySystem.ArmyUpdated += UpdateList;
             UpdateList();

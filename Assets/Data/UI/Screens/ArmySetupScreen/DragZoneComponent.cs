@@ -1,7 +1,7 @@
 using KM.Features.CameraFeature;
 using KM.Systems;
 using ScreenSystem.Components;
-using UnityEngine;
+using System;
 using UnityEngine.EventSystems;
 
 namespace KM.UI.ArmySetupScreen
@@ -10,24 +10,21 @@ namespace KM.UI.ArmySetupScreen
     {
         private bool _isDraging;
 
-        private RaycasterSystem _raycasterSystem;
-        private CameraSystem _cameraSystem;
+        public event Action<PointerEventData> OnDragBegin;
+        public event Action<PointerEventData> OnDragging;
+        public event Action<PointerEventData> OnDragEnds;
 
-        protected override void OnShow()
-        {
-            _raycasterSystem = GameSystems.GetSystem<RaycasterSystem>();
-            _cameraSystem = GameSystems.GetSystem<CameraSystem>();
-        }
+        public event Action<PointerEventData> OnClick;
 
         public void OnBeginDrag(PointerEventData eventData)
         {
             _isDraging = true;
+            OnDragBegin?.Invoke(eventData);
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-            var delta = new Vector3(-eventData.delta.x, 0, -eventData.delta.y);
-            _cameraSystem.MoveCamera(delta);
+            OnDragging?.Invoke(eventData);
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -38,9 +35,12 @@ namespace KM.UI.ArmySetupScreen
         public void OnPointerUp(PointerEventData eventData)
         {
             if (_isDraging)
+            {
+                OnDragEnds?.Invoke(eventData);
                 return;
+            }
 
-            _raycasterSystem.Raycast(eventData.position);
+            OnClick?.Invoke(eventData);
         }
     }
 }

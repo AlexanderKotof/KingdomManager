@@ -128,6 +128,8 @@ MonoBehaviour:
   - {fileID: -5196856853089603455, guid: 5864972eb1e6b854692be3bfae02a418, type: 3}
   - {fileID: 2900532613290814630, guid: 027333ae62f49b046b7969b26f01ab03, type: 3}
   - {fileID: 896943825538071442, guid: ca989b8d95a134f44a894a409b364f5d, type: 3}
+  - {fileID: 1953480118096787546, guid: 647c18b236fc4fc4da6a3e2df74ee3b7, type: 3}
+  - {fileID: 752396221016837060, guid: 3b81694ccb4426842b8250c24bb5c973, type: 3}
 --- !u!223 &6470354426819093181
 Canvas:
   m_ObjectHideFlags: 0

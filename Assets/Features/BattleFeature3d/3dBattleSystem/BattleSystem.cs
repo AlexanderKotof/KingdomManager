@@ -140,9 +140,8 @@ namespace KM.Features.BattleFeature.BattleSystem3d
 
         private void EndBattle(Fraction fractionWin)
         {
-            UIUtils.ShowScreensOnBattleEnds();
+            ScreenSystem.ScreensManager.ShowScreen<BattleOverScreen>().SetBattleInfo(_battleInfo);
 
-            Debug.Log("Battle ends, winner - " + fractionWin);
             battleState = BattleState.Home;
 
             BattleEnded?.Invoke(_battleInfo);

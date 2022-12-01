@@ -24,13 +24,10 @@ namespace ScreenSystem.Screens
                 return;
 
             ShowHide(true);
-
-
         }
 
         private void ShowHide(bool value)
         {
-            gameObject.SetActive(value);
             if (value)
             {
                 OnShow();
@@ -39,6 +36,8 @@ namespace ScreenSystem.Screens
             {
                 OnHide();
             }
+
+            gameObject.SetActive(value);
         }
 
         public void Hide()
@@ -47,12 +46,11 @@ namespace ScreenSystem.Screens
                 return;
 
             ShowHide(false);
-
         }
 
         protected virtual void OnInit() { }
         protected virtual void OnShow() { }
         protected virtual void OnHide() { }
-
+        protected virtual void OnDestroy() { }
     }
 }
