@@ -66,7 +66,7 @@ namespace KM.Features.BattleFeature.BattleSystem3d
 
         private void BattleStart()
         {
-            UIUtils.HideScreensOnBattleStarts();
+            UIUtils.HideScreensOnBattleStarts(_battleInfo);
 
             SetupUnits(_battleInfo);
 

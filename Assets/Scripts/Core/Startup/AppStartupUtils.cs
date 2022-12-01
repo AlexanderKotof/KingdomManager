@@ -1,4 +1,5 @@
-﻿using KM.Systems;
+﻿using KM.Startup.StateMachine;
+using KM.Systems;
 using KM.UI.CarouselScreens;
 using KM.UI.EndGameScreen;
 using ScreenSystem;
@@ -12,7 +13,7 @@ namespace KM.Startup
         {
             ScreensManager.HideAll();
             ScreensManager.DestroyScreen<CarouselScreen>();
-            AppStartup.AppStateMachine.RestartGame();
+            AppStateMachine.RestartGame();
         }
 
         public static void EndGame(string message)

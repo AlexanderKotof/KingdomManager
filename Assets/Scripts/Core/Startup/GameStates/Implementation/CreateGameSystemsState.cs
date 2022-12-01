@@ -1,4 +1,4 @@
-﻿using KM.Features;
+﻿using KM.Core.Features;
 using KM.Systems;
 using System.Threading.Tasks;
 
@@ -8,16 +8,14 @@ namespace KM.Startup
     {
         Feature[] _features;
 
-        public CreateGameSystemsState(string name) : base(name)
+        public CreateGameSystemsState() : base(typeof(CreateGameSystemsState).Name)
         {
-        }
-        public CreateGameSystemsState(Feature[] features) : base(typeof(CreateGameSystemsState).Name)
-        {
-            _features = features;
         }
 
         public async override Task Execute()
         {
+            _features = KM.Core.Features.Features.GetFeatures();
+
             CreateSystems();
 
             InitializeSystems();

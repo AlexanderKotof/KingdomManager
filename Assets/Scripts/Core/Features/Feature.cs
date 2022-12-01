@@ -1,11 +1,7 @@
 using UnityEngine;
 
-namespace KM.Features
+namespace KM.Core.Features
 {
-    public interface IFeature
-    {
-        void Initialize();
-    }
 
     public abstract class Feature : ScriptableObject, IFeature
     {

@@ -1,3 +1,4 @@
+using KM.Core.Features;
 using KM.Systems;
 
 namespace KM.Features.ArmyFeature

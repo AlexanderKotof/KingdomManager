@@ -7,14 +7,12 @@ namespace KM.Startup
 {
     public class AppStartup : MonoBehaviour
     {
-        public Feature[] features;
-
-        public IGameState State => AppStateMachine.State;
+        public IGameState State => _appStateMachine.State;
 
         public PlayerDataInfo playerData;
 
         private GameSystems _gameSystems;
-        public static AppStateMachine AppStateMachine { get; private set; }
+        private AppStateMachine _appStateMachine;
 
 
         private void Start()
@@ -22,7 +20,7 @@ namespace KM.Startup
             DontDestroyOnLoad(gameObject);
 
             _gameSystems = new GameSystems();
-            AppStateMachine = new AppStateMachine(features);
+            _appStateMachine = new AppStateMachine();
 
             Application.quitting += OnApplicationQuitting;
 

@@ -1,4 +1,5 @@
 ﻿using KM.Core;
+using KM.Features.DayChange;
 using KM.Features.Population;
 using KM.Features.Resources;
 using KM.Startup;
@@ -19,10 +20,16 @@ public class BuildingSystem : ISystem
     public event Action<float, float> onBuildingProgress;
     public event Action<BuildingBase> onBuilded;
 
-    BuildingBase NowBuilds;
+    public class BuildingInProgress
+    {
+
+    }
+
+    private BuildingBase _currentBuildingProgress;
 
     private PopulationSystem _populationSystem;
     private ResourcesSystem _resourcesSystem;
+    private DayChangeSystem _dayChangeSystem;
 
     private PopulationData _buildersPopulation;
 
@@ -36,6 +43,7 @@ public class BuildingSystem : ISystem
     {
         _populationSystem = GameSystems.GetSystem<PopulationSystem>();
         _resourcesSystem = GameSystems.GetSystem<ResourcesSystem>();
+        _dayChangeSystem = GameSystems.GetSystem<DayChangeSystem>();
 
         _buildersPopulation = _populationSystem.GetPopulation(PopulationType.Builders);
     }
@@ -51,29 +59,29 @@ public class BuildingSystem : ISystem
         Build(ReadyToBuild.IndexOf(building));
     }
 
-    public void Build(int index)
+    private void Build(int index)
     {
         if(index < 0 || index >= ReadyToBuild.Count)
         {
-            Debug.Log("Build error");
+            Debug.Log("No Building in building list");
             return;
         }
-        if(NowBuilds!=null)
+        if(_currentBuildingProgress!=null)
         {
             Debug.Log("Already Builds!");
             return;
         }
 
-        NowBuilds = ReadyToBuild[index];
+        _currentBuildingProgress = ReadyToBuild[index];
 
-        if (_resourcesSystem.Resources.HasResources(NowBuilds.ProduseCost))
+        if (_resourcesSystem.Resources.HasResources(_currentBuildingProgress.ProduseCost))
         {
-            _resourcesSystem.ChangeResources(NowBuilds.ProduseCost.Invert());
+            _resourcesSystem.ChangeResources(_currentBuildingProgress.ProduseCost.Invert());
         }
         else
         {
             Debug.Log("Dont have resources!");
-            NowBuilds = null;
+            _currentBuildingProgress = null;
             return;
         }
 
@@ -94,36 +102,39 @@ public class BuildingSystem : ISystem
 
     public void CancelBuilding()
     {
-        _resourcesSystem.ChangeResources(NowBuilds.ProduseCost);
+        _resourcesSystem.ChangeResources(_currentBuildingProgress.ProduseCost);
 
         Coroutines.Stop(BuildingProgress());
 
         onBuilded?.Invoke(null);
 
-        NowBuilds = null;
+        _currentBuildingProgress = null;
 
     }
 
     IEnumerator BuildingProgress()
     {
-        ProductionCost = NowBuilds.ProduseTimeSec;
+        ProductionCost = _currentBuildingProgress.ProduseTimeSec;
 
-        onStartBuilding?.Invoke(NowBuilds);
+        onStartBuilding?.Invoke(_currentBuildingProgress);
 
+        var secondsGone = 0;
+        var requiredTime = ProductionCost / Builders;
         while (ProductionCost > 0)
         {
             yield return new WaitForSeconds(1);
 
-            ProductionCost -= Builders + 1;
+            ProductionCost -= Builders;
             var secondsLeft = ProductionCost / (Builders + 1);
-            onBuildingProgress?.Invoke(secondsLeft, (NowBuilds.ProduseTimeSec - secondsLeft) / NowBuilds.ProduseTimeSec);         
+            secondsGone += 1;
+            onBuildingProgress?.Invoke(secondsLeft, (_currentBuildingProgress.ProduseTimeSec - secondsLeft) / _currentBuildingProgress.ProduseTimeSec);         
         }
 
         onBuildingProgress?.Invoke(0, 1);
 
-        BuildingBuilded(NowBuilds);
+        BuildingBuilded(_currentBuildingProgress);
 
-        NowBuilds = null;
+        _currentBuildingProgress = null;
     }
 
     private void BuildingBuilded(BuildingBase building)

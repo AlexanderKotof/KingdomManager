@@ -1,38 +1,37 @@
-﻿using KM.Features;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace KM.Startup.StateMachine
 {
     public class AppStateMachine
     {
+        private static AppStateMachine _instance;
         public IGameState State => _currentState;
 
         private IGameState _currentState;
 
-        private readonly GameState _homeState = new GameState("Home");
-        private readonly Feature[] _features;
+        private readonly GameState _loadedState = new GameState("Loaded");
 
-        public AppStateMachine(Feature[] features)
+        public AppStateMachine()
         {
-            _features = features;
+            _instance = this;
         }
 
-        public async void StartGame()
+        public static async void StartGame()
         {
-            await SetState(new InitializationState());
-            await SetState(new LoadHomeLocationState());
-            await SetState(new CreateGameSystemsState(_features));
-            await SetState(new ShowBaseScreensState());
-            await SetState(_homeState);
+            await _instance.SetState(new InitializationState());
+            await _instance.SetState(new LoadHomeLocationState());
+            await _instance.SetState(new CreateGameSystemsState());
+            await _instance.SetState(new ShowBaseScreensState());
+            await _instance.SetState(_instance._loadedState);
         }
 
-        public async void RestartGame()
+        public static async void RestartGame()
         {
-            await SetState(new InitializationState());
-            await SetState(new LoadHomeLocationState());
-            await SetState(new CreateGameSystemsState(_features));
-            await SetState(new ShowBaseScreensState());
-            await SetState(_homeState);
+            await _instance.SetState(new InitializationState());
+            await _instance.SetState(new LoadHomeLocationState());
+            await _instance.SetState(new CreateGameSystemsState());
+            await _instance.SetState(new ShowBaseScreensState());
+            await _instance.SetState(_instance._loadedState);
         }
 
         private async Task SetState(IGameState state)
