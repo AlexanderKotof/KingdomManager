@@ -13,7 +13,7 @@ namespace KM.Features.GameEventsFeature.Events.Conditions
         public override void Initialize()
         {
             _buildSystem = GameSystems.GetSystem<BuildingSystem>();
-            _buildSystem.onBuilded += BuildManager_onBuilded;
+            _buildSystem.Builded += BuildManager_onBuilded;
         }
 
         private void BuildManager_onBuilded(BuildingBase obj)
@@ -22,7 +22,7 @@ namespace KM.Features.GameEventsFeature.Events.Conditions
             {
                 Debug.Log(building.name + " builded!"); 
                 Satisfy();
-                _buildSystem.onBuilded -= BuildManager_onBuilded;
+                _buildSystem.Builded -= BuildManager_onBuilded;
             }
         }
 

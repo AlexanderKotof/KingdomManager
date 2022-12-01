@@ -13,19 +13,13 @@ public class BuildingSystem : ISystem
 {
     public List<BuildingBase> BuildedBuildings;
     public List<BuildingBase> ReadyToBuild;
-    private bool building;
-    float ProductionCost = 0;
 
-    public event Action<BuildingBase> onStartBuilding;
-    public event Action<float, float> onBuildingProgress;
-    public event Action<BuildingBase> onBuilded;
+    public event Action<BuildingBase> BuildingBegins;
+    public event Action<string, float> BuildingProgress;
+    public event Action<BuildingBase> Builded;
 
-    public class BuildingInProgress
-    {
-
-    }
-
-    private BuildingBase _currentBuildingProgress;
+    private float _productionCostLeft;
+    private BuildingBase _buildingPrototype;
 
     private PopulationSystem _populationSystem;
     private ResourcesSystem _resourcesSystem;
@@ -46,11 +40,13 @@ public class BuildingSystem : ISystem
         _dayChangeSystem = GameSystems.GetSystem<DayChangeSystem>();
 
         _buildersPopulation = _populationSystem.GetPopulation(PopulationType.Builders);
+
+        _dayChangeSystem.NewDayCome += OnNewDayCome;
     }
 
     public void Destroy()
     {
-
+        _dayChangeSystem.NewDayCome -= OnNewDayCome;
     }
 
 
@@ -66,33 +62,43 @@ public class BuildingSystem : ISystem
             Debug.Log("No Building in building list");
             return;
         }
-        if(_currentBuildingProgress!=null)
+        if(_buildingPrototype!=null)
         {
             Debug.Log("Already Builds!");
             return;
         }
 
-        _currentBuildingProgress = ReadyToBuild[index];
+        _buildingPrototype = ReadyToBuild[index];
 
-        if (_resourcesSystem.Resources.HasResources(_currentBuildingProgress.ProduseCost))
+        if (_resourcesSystem.Resources.HasResources(_buildingPrototype.ProduseCost))
         {
-            _resourcesSystem.ChangeResources(_currentBuildingProgress.ProduseCost.Invert());
+            _resourcesSystem.ChangeResources(_buildingPrototype.ProduseCost.Invert());
         }
         else
         {
             Debug.Log("Dont have resources!");
-            _currentBuildingProgress = null;
+            _buildingPrototype = null;
             return;
         }
 
-        Coroutines.Run(BuildingProgress());
+        Coroutines.Run(BuildingProgressCoroutine());
+    }
+
+    private void OnNewDayCome(int day)
+    {
+        if (_buildingPrototype == null)
+            return;
+
+         _productionCostLeft -= Builders;
     }
 
     public void SpeedUp()
     {
         var resources = new ResourceStorage(0, 0, 0, 0, 0, -1);
         _resourcesSystem.ChangeResources(resources);
-        ProductionCost = 0;
+
+        Coroutines.Stop(BuildingProgressCoroutine());
+        BuildingBuilded();
     }
 
     public bool IsBuilded(BuildingBase building)
@@ -102,53 +108,59 @@ public class BuildingSystem : ISystem
 
     public void CancelBuilding()
     {
-        _resourcesSystem.ChangeResources(_currentBuildingProgress.ProduseCost);
+        _resourcesSystem.ChangeResources(_buildingPrototype.ProduseCost);
 
-        Coroutines.Stop(BuildingProgress());
+        Coroutines.Stop(BuildingProgressCoroutine());
 
-        onBuilded?.Invoke(null);
+        Builded?.Invoke(null);
 
-        _currentBuildingProgress = null;
+        _buildingPrototype = null;
 
     }
 
-    IEnumerator BuildingProgress()
+    IEnumerator BuildingProgressCoroutine()
     {
-        ProductionCost = _currentBuildingProgress.ProduseTimeSec;
+        _productionCostLeft = _buildingPrototype.ProduseTimeSec;
 
-        onStartBuilding?.Invoke(_currentBuildingProgress);
+        BuildingBegins?.Invoke(_buildingPrototype);
 
-        var secondsGone = 0;
-        var requiredTime = ProductionCost / Builders;
-        while (ProductionCost > 0)
+        var startTime = Time.realtimeSinceStartup;
+        while (_productionCostLeft > 0)
         {
-            yield return new WaitForSeconds(1);
+            yield return null;
 
-            ProductionCost -= Builders;
-            var secondsLeft = ProductionCost / (Builders + 1);
-            secondsGone += 1;
-            onBuildingProgress?.Invoke(secondsLeft, (_currentBuildingProgress.ProduseTimeSec - secondsLeft) / _currentBuildingProgress.ProduseTimeSec);         
+            if (Builders == 0)
+            {
+                BuildingProgress?.Invoke("Indefinite", 0);
+                continue;
+            }
+
+            var secondsLeft = Mathf.CeilToInt(_productionCostLeft / Builders);
+            var secondsGone = Time.realtimeSinceStartup - startTime;
+
+            BuildingProgress?.Invoke(secondsLeft.ToString(), (secondsGone) / (secondsGone + secondsLeft));
         }
 
-        onBuildingProgress?.Invoke(0, 1);
-
-        BuildingBuilded(_currentBuildingProgress);
-
-        _currentBuildingProgress = null;
+        BuildingBuilded();
     }
 
-    private void BuildingBuilded(BuildingBase building)
+    private void BuildingBuilded()
     {
-        ReadyToBuild.Remove(building);
-        BuildedBuildings.Add(building);
+        if (_buildingPrototype == null)
+            return;
 
-        if (building.HasUpgrade())
-            ReadyToBuild.Add(building.buildingUpgrade);
+        ReadyToBuild.Remove(_buildingPrototype);
+        BuildedBuildings.Add(_buildingPrototype);
 
-        foreach(var bonus in building.ProvideBonuses)
+        if (_buildingPrototype.HasUpgrade())
+            ReadyToBuild.Add(_buildingPrototype.buildingUpgrade);
+
+        foreach(var bonus in _buildingPrototype.ProvideBonuses)
             bonus.Activate();
 
-        onBuilded?.Invoke(building);
+        Builded?.Invoke(_buildingPrototype);
+
+        _buildingPrototype = null;
     }
 
     private int Builders

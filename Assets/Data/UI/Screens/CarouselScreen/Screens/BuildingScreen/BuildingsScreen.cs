@@ -39,9 +39,9 @@ namespace KM.UI.CarouselScreens
             buildingProgress.speedupButton.onClick.AddListener(_buildingSystem.SpeedUp);
             buildingProgress.Hide();
 
-            _buildingSystem.onStartBuilding += OnStartBuilding;
-            _buildingSystem.onBuildingProgress += OnBuildingProgress;
-            _buildingSystem.onBuilded += OnBuilded;
+            _buildingSystem.BuildingBegins += OnStartBuilding;
+            _buildingSystem.BuildingProgress += OnBuildingProgress;
+            _buildingSystem.Builded += OnBuilded;
 
             _dayChangeSystem.NewDayCome += OnNewDayComes;
         }
@@ -57,12 +57,12 @@ namespace KM.UI.CarouselScreens
         private void OnStartBuilding(BuildingBase building)
         {
             buildingProgress.Show();
-            buildingProgress.SetInfo(building.Icon, $"{building.ProduseTimeSec}s left", 0);
+            buildingProgress.SetInfo(building.Icon, $"", 0);
         }
 
-        private void OnBuildingProgress(float timeLeft, float progress)
+        private void OnBuildingProgress(string timeLeft, float progress)
         {
-            buildingProgress.UpdateProgress( $"{timeLeft}s left", progress);
+            buildingProgress.UpdateProgress( $"{timeLeft} days left", progress);
         }
 
         private void OnBuilded(BuildingBase obj)
@@ -97,9 +97,9 @@ namespace KM.UI.CarouselScreens
 
             _dayChangeSystem.NewDayCome -= OnNewDayComes;
 
-            _buildingSystem.onStartBuilding -= OnStartBuilding;
-            _buildingSystem.onBuildingProgress -= OnBuildingProgress;
-            _buildingSystem.onBuilded -= OnBuilded;
+            _buildingSystem.BuildingBegins -= OnStartBuilding;
+            _buildingSystem.BuildingProgress -= OnBuildingProgress;
+            _buildingSystem.Builded -= OnBuilded;
         }
 
         private void OnNewDayComes(int obj)
