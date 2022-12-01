@@ -19,7 +19,7 @@ namespace KM.UI.BattleBeginsScreen
             closeButton.SetCallback(() =>
             {
                 Hide();
-                UIUtils.ShowScreensOnBattleEnds();
+                UIUtils.ShowScreensOnBattleEnds(battle);
             });
         }
     }

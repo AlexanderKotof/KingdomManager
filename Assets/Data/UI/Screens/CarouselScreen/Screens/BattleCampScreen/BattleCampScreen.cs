@@ -103,7 +103,7 @@ namespace KM.UI.CarouselScreens
 
         private void OnTrainingProgress(float timeLeft, float progress)
         {
-            recruitProgressView.UpdateProgress($"{timeLeft}s left", progress);
+            recruitProgressView.UpdateProgress($"{Mathf.CeilToInt(timeLeft)}s left", progress);
         }
 
         private void OnTrained(BattleUnitEntity unit)
